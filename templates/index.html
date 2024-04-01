@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Feedback</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="navbar-nav ms-3">
+        <a class="nav-item nav-link active" href="http://127.0.0.1:8088">Home</a>
+        <a class="nav-item nav-link" href="/about">About</a>
+        <a class="nav-item nav-link" href="/tips">Email Tips</a>
+      </div>
+    </div>
+  </nav>
+
+    <div class="container mt-5">
+        <div class="centered">
+            <h1 class="header">Email Analysis</h1>
+            <p class="desc">Enter your email content below to receive feedback:</p>
+            <form method="POST" action="/email" class="form">
+                <div class="form-div">
+                    <textarea rows="4" name="email_content" class="form-control mr-2" placeholder="Email Content" required></textarea>
+                    <button type="submit" class="btn btn-outline-primary mt-3">Submit Email</button>
+                </div>
+            </form>
+            <br />
+            {% if sentence_scores %}
+                <div>
+                    <h4>Sentences and Scores:</h4>
+                    {% for sentence, score in sentence_scores %}
+                        <p>{{ sentence }} - Score: {{ score }}</p>
+                    {% endfor %}
+                </div>
+                <div class="mt-4">
+                    <h3>Overall Score:</h3>
+                    <p>{{ overall_score }}% - {{ overall_comment }}</p>
+                </div>
+                {% if overall_score is not none %}
+                    <form method="GET" action="/" class="form">
+                        <div class="form-div">
+                            <button type="submit" class="btn btn-outline-primary mb-4">Submit new email</button>
+                        </div>
+                    </form>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
